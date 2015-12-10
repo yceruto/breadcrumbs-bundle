@@ -25,10 +25,7 @@
     "autoload": {
         "psr-4": {
             "Yceruto\\Bundle\\BreadcrumbsBundle\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        }
     }
 }
 
