@@ -1,0 +1,10 @@
+<ol class="breadcrumb">
+    {% for node in breadcrumbs %}
+        {% set label = 'breadcrumbs.' ~ node.name %}
+        {% if not loop.last %}
+            <li><a href="{{ node.path }}">{{ label|trans }}</a></li>
+        {% else %}
+            <li class="active">{{ label|trans }}</li>
+        {% endif %}
+    {% endfor %}
+</ol>
