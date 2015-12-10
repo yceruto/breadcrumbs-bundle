@@ -69,7 +69,7 @@ Resources
 
 You can run the unit tests with the following command:
 
-    $ cd path/to/BreadcrumbsBundle/
+    $ cd path/to/breadcrumbs-bundle/
     $ composer install
     $ phpunit
 
