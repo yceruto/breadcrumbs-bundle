@@ -54,8 +54,7 @@ Usage
 
 ### Customize the breadcrumbs template
 
-By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override the default template 
-named `breadcrumbs.html.twig` creating `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` file in your project structure.
+By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override the default template creating your `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` template in your project structure.
 
 ```twig
 {# app/Resources/views/breadcrumbs/breadcrumbs.html.twig #}
