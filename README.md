@@ -1,14 +1,14 @@
 Breadcrumbs
 ===========
 
+[![Build Status](https://travis-ci.org/yceruto/breadcrumbs-bundle.svg?branch=master)](https://travis-ci.org/yceruto/breadcrumbs-bundle)
+[![Coverage Status](https://coveralls.io/repos/yceruto/breadcrumbs-bundle/badge.svg?branch=master)](https://coveralls.io/r/yceruto/breadcrumbs-bundle?branch=master)
+<sup><kbd>**SUPPORTS SYMFONY 2.x and 3.x**</kbd></sup>
+
 A magic way to create breadcrumbs for symfony applications.
 
 **Features**
 * build breadcrumbs through current request uri.
-
-[![Build Status](https://travis-ci.org/yceruto/breadcrumbs-bundle.svg?branch=master)](https://travis-ci.org/yceruto/breadcrumbs-bundle)
-[![Coverage Status](https://coveralls.io/repos/yceruto/breadcrumbs-bundle/badge.svg?branch=master)](https://coveralls.io/r/yceruto/breadcrumbs-bundle?branch=master)
-<sup><kbd>**SUPPORTS SYMFONY 2.x and 3.x**</kbd></sup>
 
 Installation
 ------------
@@ -46,7 +46,7 @@ class AppKernel extends Kernel
 Usage
 -----
 
-### Render the breadcrumbs into any twig template
+### Render the breadcrumbs in your template
 
 ```twig
 {{ render_breadcrumbs() }}
@@ -54,8 +54,8 @@ Usage
 
 ### Customize the breadcrumbs template
 
-By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can to create a custom template 
-named `breadcrumbs.html.twig` within `app/Resources/views/breadcrumbs/` directory in your project structure.
+By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override the default template 
+named `breadcrumbs.html.twig` creating `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` file in your project structure.
 
 ```twig
 {# app/Resources/views/breadcrumbs/breadcrumbs.html.twig #}
