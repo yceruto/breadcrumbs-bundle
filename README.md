@@ -49,7 +49,8 @@ Usage
 
 ### Customize the breadcrumbs template
 
-Create a custom template named `breadcrumbs.html.twig` within `app/Resources/views/breadcrumbs/` directory in you project structure.
+By default the breadcrumbs is rendered across `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can to create a custom template 
+named `breadcrumbs.html.twig` within `app/Resources/views/breadcrumbs/` directory in you project structure.
 
 ```twig
 {# app/Resources/views/breadcrumbs/breadcrumbs.html.twig #}

@@ -56,7 +56,7 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
     public function getCreateData()
     {
         return array(
-            'home' => array(
+            'index' => array(
                 '/', array('nodes' => array('route_index' => '/'))
             ),
             'about' => array(
@@ -67,30 +67,30 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
                     )
                 )
             ),
-            'sell' => array(
-                '/sell/', array(
+            'buy' => array(
+                '/buy/', array(
                     'nodes' => array(
                         'route_index' => '/',
-                        'route_buy_index' => '/sell/',
+                        'route_buy_index' => '/buy/',
                     )
                 )
             ),
-            'filter_1' => array(
-                '/sell/cell-phones', array(
+            'buy_cellphones' => array(
+                '/buy/cell-phones', array(
                     'nodes' => array(
                         'route_index' => '/',
-                        'route_buy_index' => '/sell/',
-                        'route_buy_cellphones' => '/sell/cell-phones',
+                        'route_buy_index' => '/buy/',
+                        'route_buy_cellphones' => '/buy/cell-phones',
                     )
                 )
             ),
-            'filter_2' => array(
-                '/sell/cell-phones/apple', array(
+            'buy_apple' => array(
+                '/buy/cell-phones/apple', array(
                     'nodes' => array(
                         'route_index' => '/',
-                        'route_buy_index' => '/sell/',
-                        'route_buy_cellphones' => '/sell/cell-phones',
-                        'route_buy_apple' => '/sell/cell-phones/apple',
+                        'route_buy_index' => '/buy/',
+                        'route_buy_cellphones' => '/buy/cell-phones',
+                        'route_buy_apple' => '/buy/cell-phones/apple',
                     )
                 )
             ),
