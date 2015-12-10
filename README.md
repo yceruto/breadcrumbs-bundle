@@ -1,7 +1,10 @@
 Breadcrumbs
 ===========
 
-A magic way to create breadcrumbs for symfony applications with zero configuration.
+A magic way to create breadcrumbs for symfony applications.
+
+**features**
+* build breadcrumbs through current request uri.
 
 [![Build Status](https://travis-ci.org/yceruto/breadcrumbs-bundle.svg?branch=master)](https://travis-ci.org/yceruto/breadcrumbs-bundle)
 
