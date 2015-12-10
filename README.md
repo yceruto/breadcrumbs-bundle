@@ -3,6 +3,8 @@ Breadcrumbs
 
 A magic way to create breadcrumbs for symfony applications with zero configuration.
 
+[![Build Status](https://travis-ci.org/yceruto/breadcrumbs-bundle.svg?branch=master)](https://travis-ci.org/yceruto/breadcrumbs-bundle)
+
 Installation
 ------------
 
