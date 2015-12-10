@@ -1,4 +1,5 @@
 service_name: travis-ci
+repo_token: Nq7YHVjkj7gVMm1IWnZjOIteTF1TX9g1b
 src_dir: .
 coverage_clover: build/logs/clover.xml
 
