@@ -108,7 +108,7 @@ class BreadcrumbsBuilder
      */
     private function createNode($path)
     {
-        $baseUrl = $this->requestStack->getCurrentRequest()->getBaseUrl();
+        $baseUrl = $this->getRequest()->getBaseUrl();
         $traces = $this->matcher->getTraces($path);
 
         foreach ($traces as $trace) {
