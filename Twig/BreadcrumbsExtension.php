@@ -12,6 +12,7 @@
 namespace Yceruto\Bundle\BreadcrumbsBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs;
 
 class BreadcrumbsExtension extends \Twig_Extension
 {
@@ -35,10 +36,10 @@ class BreadcrumbsExtension extends \Twig_Extension
         );
     }
 
-    public function renderBreadcrumbs(\Twig_Environment $twig)
+    public function renderBreadcrumbs(\Twig_Environment $twig, Breadcrumbs $breadcrumbs = null, $template = null)
     {
-        $breadcrumbs = $this->container->get('breadcrumbs_builder')->create();
-        $template = $this->container->getParameter('breadcrumbs_template');
+        $breadcrumbs = $breadcrumbs ?: $this->container->get('breadcrumbs_builder')->createFromRequest();
+        $template = $template ?: $this->container->getParameter('breadcrumbs_template');
 
         return $twig->render($template, array('breadcrumbs' => $breadcrumbs));
     }

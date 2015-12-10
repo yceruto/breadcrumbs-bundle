@@ -9,7 +9,9 @@ Breadcrumbs
 A magic way to create breadcrumbs for symfony applications.
 
 **Features**
-* build breadcrumbs through current request uri.
+* build the breadcrumbs through current request uri (Magic).
+* build the custom breadcrumbs.
+* render the custom breadcrumbs template.
 
 Installation
 ------------
@@ -44,13 +46,35 @@ class AppKernel extends Kernel
 }
 ```
 
-Usage
------
+Basic Usage
+-----------
 
 ### Render the breadcrumbs in your template
 
 ```twig
 {{ render_breadcrumbs() }}
+```
+
+Advance Usage
+-------------
+
+### Create the custom breadcrumbs
+
+```php
+public function indexAction() 
+{
+	$breadcrumbs = $this->get('breadcrumbs_builder')->create();
+	$breadcrumbs->add('name', '/');
+	
+	$node = new BreadcrumbsNode('name', '/');
+	$breadcrumbs->addNode($node);
+}
+```
+
+Render the custom breadcrumbs here.
+
+```twig
+{{ render_breadcrumbs(custom_breadcrumbs) }}
 ```
 
 ### Customize the breadcrumbs template
@@ -70,6 +94,12 @@ By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcr
         {% endif %}
     {% endfor %}
 </ol>
+```
+
+Override the default template passing the custom template path directly in the render function.
+
+```twig
+{{ render_breadcrumbs(template='breadcrumbs/custom_breadcrumbs.html.twig')
 ```
 
 Resources

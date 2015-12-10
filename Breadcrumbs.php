@@ -19,6 +19,19 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     private $nodes = array();
 
     /**
+     * Add a node
+     *
+     * @param string $name
+     * @param string $path
+     *
+     * @return Breadcrumbs
+     */
+    public function add($name, $path)
+    {
+        return $this->addNode(new BreadcrumbsNode($name, $path));
+    }
+
+    /**
      * @param BreadcrumbsNode $node
      *
      * @return Breadcrumbs
@@ -26,7 +39,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     public function addNode(BreadcrumbsNode $node)
     {
         if (!$this->containsNode($node)) {
-            $this->nodes[] = $node;
+            $this->nodes[$node->getName()] = $node;
         }
 
         return $this;
@@ -35,14 +48,14 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * {@inheritDoc}
      */
-    public function remove($key)
+    public function remove($name)
     {
-        if (!isset($this->nodes[$key]) && !array_key_exists($key, $this->nodes)) {
+        if (!isset($this->nodes[$name]) && !array_key_exists($name, $this->nodes)) {
             return null;
         }
 
-        $removed = $this->nodes[$key];
-        unset($this->nodes[$key]);
+        $removed = $this->nodes[$name];
+        unset($this->nodes[$name]);
 
         return $removed;
     }
@@ -54,13 +67,13 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function removeNode(BreadcrumbsNode $node)
     {
-        $key = array_search($node, $this->nodes, true);
+        $name = array_search($node, $this->nodes, true);
 
-        if ($key === false) {
+        if ($name === false) {
             return false;
         }
 
-        unset($this->nodes[$key]);
+        unset($this->nodes[$name]);
 
         return true;
     }
@@ -134,29 +147,29 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($key)
+    public function offsetExists($name)
     {
-        return isset($this->nodes[$key]) || array_key_exists($key, $this->nodes);
+        return isset($this->nodes[$name]) || array_key_exists($name, $this->nodes);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($key)
+    public function offsetGet($name)
     {
-        return isset($this->nodes[$key]) ? $this->nodes[$key] : null;
+        return isset($this->nodes[$name]) ? $this->nodes[$name] : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($name, $value)
     {
-        if (!isset($key)) {
+        if (!isset($name)) {
             $this->addNode($value);
         }
 
-        $this->nodes[$key] = $value;
+        $this->nodes[$name] = $value;
     }
 
     /**

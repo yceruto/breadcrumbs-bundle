@@ -59,11 +59,21 @@ class BreadcrumbsBuilder
     }
 
     /**
-     * Create a Breadcrumb from request path
+     * Create a Breadcrumb instance
      *
      * @return Breadcrumbs
      */
     public function create()
+    {
+        return new Breadcrumbs();
+    }
+
+    /**
+     * Create a Breadcrumb from request path
+     *
+     * @return Breadcrumbs
+     */
+    public function createFromRequest()
     {
         $breadcrumbs = new Breadcrumbs();
 

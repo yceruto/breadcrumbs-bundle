@@ -24,6 +24,18 @@ class BreadcrumbsNode
     private $path;
 
     /**
+     * BreadcrumbsNode constructor.
+     *
+     * @param string $name
+     * @param string $path
+     */
+    public function __construct($name = null, $path = null)
+    {
+        $this->name = $name;
+        $this->path = $path;
+    }
+
+    /**
      * @return string
      */
     public function getName()

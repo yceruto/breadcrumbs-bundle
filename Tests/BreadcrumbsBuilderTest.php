@@ -50,7 +50,7 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
             $breadcrumbsBuilder->setRequest($request);
         }
 
-        $breadcrumbs = $breadcrumbsBuilder->create();
+        $breadcrumbs = $breadcrumbsBuilder->createFromRequest();
 
         $this->assertCount(count($result['nodes']), $breadcrumbs->getNodes());
         $nodes = $breadcrumbs->getNodes();
