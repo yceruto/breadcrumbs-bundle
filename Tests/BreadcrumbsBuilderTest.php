@@ -46,7 +46,7 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
         $breadcrumbsBuilder = new BreadcrumbsBuilder($route, $requestStack);
 
         // BC 2.3
-        if (!class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+        if (null === $requestStack) {
             $breadcrumbsBuilder->setRequest($request);
         }
 
