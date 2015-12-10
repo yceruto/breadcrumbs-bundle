@@ -12,9 +12,18 @@
 namespace Yceruto\Bundle\BreadcrumbsBundle;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Matcher\TraceableUrlMatcher;
 
+/**
+ * This builder works in 2 modes:
+ *
+ *  * 2.3 compatibility mode where you must call setRequest whenever the Request changes.
+ *  * 2.4+ mode where you must pass a RequestStack instance in the constructor.
+ *
+ * @author Yonel Ceruto <yonelceruto@gmail.com>
+ */
 class BreadcrumbsBuilder
 {
 
@@ -28,10 +37,25 @@ class BreadcrumbsBuilder
      */
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack, Router $router)
+    /**
+     * @var Request
+     */
+    private $request;
+
+    public function __construct(Router $router, RequestStack $requestStack = null)
     {
-        $this->requestStack = $requestStack;
         $this->matcher = new TraceableUrlMatcher($router->getRouteCollection(), $router->getContext());
+        $this->requestStack = $requestStack;
+    }
+
+    /**
+     * BC with the 2.3 version.
+     *
+     * @param Request|null $request
+     */
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
     }
 
     /**
@@ -58,7 +82,7 @@ class BreadcrumbsBuilder
      */
     private function getPaths()
     {
-        $pathInfo = trim($this->requestStack->getCurrentRequest()->getPathInfo(), '/');
+        $pathInfo = trim($this->getRequest()->getPathInfo(), '/');
         $parts = $pathInfo ? explode('/', $pathInfo) : array();
         array_unshift($parts, '/');
         $path = '';
@@ -98,5 +122,10 @@ class BreadcrumbsBuilder
         }
 
         return false;
+    }
+
+    private function getRequest()
+    {
+        return $this->requestStack ? $this->requestStack->getCurrentRequest() : $this->request;
     }
 }

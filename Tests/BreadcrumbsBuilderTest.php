@@ -11,6 +11,7 @@
 
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -34,13 +35,10 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
         $route->method('getRouteCollection')->willReturn($routeCollection);
         $route->method('getContext')->willReturn(new RequestContext());
 
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
-        $request->method('getPathInfo')->willReturn($path);
-
         $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->disableOriginalConstructor()->getMock();
-        $requestStack->method('getCurrentRequest')->willReturn($request);
+        $requestStack->method('getCurrentRequest')->willReturn(Request::create($path));
 
-        $breadcrumbsBuilder = new BreadcrumbsBuilder($requestStack, $route);
+        $breadcrumbsBuilder = new BreadcrumbsBuilder($route, $requestStack);
         $breadcrumbs = $breadcrumbsBuilder->create();
 
         $this->assertCount(count($result['nodes']), $breadcrumbs->getNodes());
