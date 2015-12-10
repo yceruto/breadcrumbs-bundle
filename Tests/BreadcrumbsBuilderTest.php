@@ -35,10 +35,21 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
         $route->method('getRouteCollection')->willReturn($routeCollection);
         $route->method('getContext')->willReturn(new RequestContext());
 
-        $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->disableOriginalConstructor()->getMock();
-        $requestStack->method('getCurrentRequest')->willReturn(Request::create($path));
+        $request = Request::create($path);
+        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->disableOriginalConstructor()->getMock();
+            $requestStack->method('getCurrentRequest')->willReturn($request);
+        } else {
+            $requestStack = null;
+        }
 
         $breadcrumbsBuilder = new BreadcrumbsBuilder($route, $requestStack);
+
+        // BC 2.3
+        if (!class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $breadcrumbsBuilder->setRequest($request);
+        }
+
         $breadcrumbs = $breadcrumbsBuilder->create();
 
         $this->assertCount(count($result['nodes']), $breadcrumbs->getNodes());
