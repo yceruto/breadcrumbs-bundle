@@ -80,7 +80,7 @@ framework:
 Suppose I have the follows routes and translation:
 
 ```yaml
-# Config/routing.yml
+# app/config/routing.yml
 
 _index:
 	path: /
