@@ -136,10 +136,12 @@ public function indexAction()
 	$node->setPath('/')
 	$node->setLabel('home')
 	$breadcrumbs->addNode($node);
+	
+	return $this->render('index.html.twig', array('custom_breadcrumbs' => $breadcrumbs))
 }
 ```
 
-Render the custom breadcrumbs here.
+Then render the custom breadcrumbs here.
 
 ```twig
 {{ render_breadcrumbs(custom_breadcrumbs) }}
