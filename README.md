@@ -87,26 +87,31 @@ _index:
 	path: /
 	defaults: { _controller: ... }
 	
+_store:
+	path: /store
+	defaults: { _controller: ... }
+	
 _category:
-	path: /{category}
+	path: /store/{category}
 	defaults: { _controller: ... }
 	
 _category_product:
-	path: /{category}/{product}
+	path: /store/{category}/{product}
 	defaults: { _controller: ... }
 ```
 
 ```yaml
-# Resources/translations/messages.yml
+# app/Resources/translations/messages.en.yml
 breadcrumbs._index: Home
 ```
 
-later by request `/foo/bar` the `render_breadcrumbs` function returns:
+later by request `/store/foo/bar` the `render_breadcrumbs` function returns:
 
 ```html
 <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li><a href="/foo">Foo</a></li>
+    <li><a href="/store">Store</a></li>
+    <li><a href="/store/foo">Foo</a></li>
     <li class="active">Bar</li>
 </ol>
 ```
