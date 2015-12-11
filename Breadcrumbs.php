@@ -46,7 +46,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function remove($index)
     {
