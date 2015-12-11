@@ -42,8 +42,14 @@ class BreadcrumbsBuilder
      */
     private $request;
 
+    /**
+     * @var Router
+     */
+    private $router;
+
     public function __construct(Router $router, RequestStack $requestStack = null)
     {
+        $this->router = $router;
         $this->matcher = new TraceableUrlMatcher($router->getRouteCollection(), $router->getContext());
         $this->requestStack = $requestStack;
     }
@@ -123,9 +129,29 @@ class BreadcrumbsBuilder
 
         foreach ($traces as $trace) {
             if (TraceableUrlMatcher::ROUTE_MATCHES == $trace['level']) {
+                $route = $this->router->getRouteCollection()
+                    ->get($trace['name']);
+
+                // get label through settings
+                $label = $route->getDefault('breadcrumbs_label');
+
+                if (empty($label)) {
+                    // get label through path
+                    $compiled = $route->compile();
+                    $vars = $compiled->getVariables();
+                    preg_match($compiled->getRegex(), $path, $match);
+                    $label = trim($match[end($vars)], '/');
+                }
+
+                if (empty($label)) {
+                    // get label through route name
+                    $label = 'breadcrumbs.' . $trace['name'];
+                }
+
                 $node = new BreadcrumbsNode();
-                $node->setName($trace['name']);
-                $node->setPath($baseUrl . $trace['path']);
+                $node->setLabel($label);
+                // use $baseUrl for no prod environments e.g dev 'app_dev.php'
+                $node->setPath($baseUrl . $path);
 
                 return $node;
             }

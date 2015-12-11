@@ -16,43 +16,23 @@ class BreadcrumbsNode
     /**
      * @var string
      */
-    private $name;
+    private $path;
 
     /**
      * @var string
      */
-    private $path;
+    private $label;
 
     /**
      * BreadcrumbsNode constructor.
      *
-     * @param string $name
      * @param string $path
+     * @param string $label
      */
-    public function __construct($name = null, $path = null)
+    public function __construct($path = null, $label = null)
     {
-        $this->name = $name;
         $this->path = $path;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return BreadcrumbsNode
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
+        $this->label = $label;
     }
 
     /**
@@ -74,4 +54,30 @@ class BreadcrumbsNode
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string $label
+     *
+     * @return BreadcrumbsNode
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+    	return $this->label;
+    }
+
 }

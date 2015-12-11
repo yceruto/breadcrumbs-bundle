@@ -55,6 +55,69 @@ Basic Usage
 {{ render_breadcrumbs() }}
 ```
 
+Translate the Breadcrumbs Interface
+-----------------------------------
+
+The breadcrumbs uses the same language as the underlying Symfony application, which
+is usually configured in the `locale` option of the `app/config/parameters.yml`
+file.
+
+The strings that belong to the breadcrumbs interface are translated using the 
+default `messages` domain.
+
+In addition, make sure that the `translator` service is enabled in the
+application (projects based on the Symfony Standard Edition have it disabled
+by default):
+
+```yaml
+# app/config/config.yml
+framework:
+    translator: { fallbacks: [ "%locale%" ] }
+```
+
+### How to work
+
+Suppose I have the follows routes and translation:
+
+```yaml
+# Config/routing.yml
+
+_index:
+	path: /
+	defaults: { _controller: ... }
+	
+_category:
+	path: /{category}
+	defaults: { _controller: ... }
+	
+_category_product:
+	path: /{category}/{product}
+	defaults: { _controller: ... }
+```
+
+```yaml
+# Resources/translations/messages.yml
+breadcrumbs._index: Home
+```
+
+later by request `/foo/bar` the `render_breadcrumbs` function returns:
+
+```html
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/foo">Foo</a></li>
+    <li class="active">Bar</li>
+</ol>
+```
+
+If your application does not use translation, you can set the label on the route definition:
+
+```yaml
+_index:
+	path: /
+	defaults: { _controller: ..., breadcrumbs_label: 'Home' }
+```
+
 Advance Usage
 -------------
 
@@ -64,9 +127,13 @@ Advance Usage
 public function indexAction() 
 {
 	$breadcrumbs = $this->get('breadcrumbs_builder')->create();
-	$breadcrumbs->add('name', '/');
+	$breadcrumbs->add('/', 'home');
 	
-	$node = new BreadcrumbsNode('name', '/');
+	// or
+	
+	$node = new BreadcrumbsNode();
+	$node->setPath('/')
+	$node->setLabel('home')
 	$breadcrumbs->addNode($node);
 }
 ```
@@ -86,11 +153,10 @@ By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcr
 
 <ol class="breadcrumb">
     {% for node in breadcrumbs %}
-        {% set label = 'breadcrumbs.' ~ node.name %}
         {% if not loop.last %}
-            <li><a href="{{ node.path }}"><i class="fa fa-home"></i> {{ label|trans }}</a></li>
+            <li><a href="{{ node.path }}">{% if loop.first %}<i class="fa fa-home"></i>{% endif %} {{ node.label|trans }}</a></li>
         {% else %}
-            <li class="active">{{ label|trans }}</li>
+            <li class="active">{% if loop.first %}<i class="fa fa-home"></i>{% endif %} {{ node.label|trans }}</li>
         {% endif %}
     {% endfor %}
 </ol>
