@@ -75,7 +75,7 @@ framework:
     translator: { fallbacks: [ "%locale%" ] }
 ```
 
-### How to work
+### How it work
 
 Suppose I have the follows routes and translation:
 
