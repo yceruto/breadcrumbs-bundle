@@ -51,6 +51,7 @@ class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $this->breadcrumbs->getNodes());
         $this->breadcrumbs->remove(0);
         $this->assertCount(0, $this->breadcrumbs->getNodes());
+        $this->assertNull($this->breadcrumbs->remove(0));
     }
 
     public function testRemoveNode()
@@ -60,6 +61,7 @@ class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $this->breadcrumbs->getNodes());
         $this->breadcrumbs->removeNode($node);
         $this->assertCount(0, $this->breadcrumbs->getNodes());
+        $this->assertFalse($this->breadcrumbs->removeNode($node));
     }
 
     public function testContainNode()
