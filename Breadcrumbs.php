@@ -51,7 +51,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     public function remove($index)
     {
         if (!isset($this->nodes[$index]) && !array_key_exists($index, $this->nodes)) {
-            return null;
+            return;
         }
 
         $removed = $this->nodes[$index];

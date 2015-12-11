@@ -26,7 +26,6 @@ use Symfony\Component\Routing\Matcher\TraceableUrlMatcher;
  */
 class BreadcrumbsBuilder
 {
-
     /**
      * @var TraceableUrlMatcher
      */

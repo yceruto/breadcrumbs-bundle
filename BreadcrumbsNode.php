@@ -77,7 +77,6 @@ class BreadcrumbsNode
 
     public function __toString()
     {
-    	return $this->label;
+        return $this->label;
     }
-
 }
