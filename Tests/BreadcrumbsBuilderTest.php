@@ -110,14 +110,18 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createBreadcrumbsBuilderHelper($path, RouteCollection $collection)
     {
-        $route = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')->disableOriginalConstructor()->getMock();
+        $route = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
+            ->disableOriginalConstructor()
+            ->getMock();
         $route->method('getRouteCollection')->willReturn($collection);
         $route->method('getContext')->willReturn(new RequestContext());
 
         $request = Request::create($path);
 
         if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->disableOriginalConstructor()->getMock();
+            $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')
+                ->disableOriginalConstructor()
+                ->getMock();
             $requestStack->method('getCurrentRequest')->willReturn($request);
         } else {
             $requestStack = null;

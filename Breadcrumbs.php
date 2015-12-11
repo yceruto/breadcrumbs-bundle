@@ -24,11 +24,14 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param string $path
      * @param string $label
      *
-     * @return Breadcrumbs
+     * @return BreadcrumbsNode
      */
     public function add($path, $label)
     {
-        return $this->addNode(new BreadcrumbsNode($path, $label));
+        $node = new BreadcrumbsNode($path, $label);
+        $this->addNode($node);
+
+        return $node;
     }
 
     /**
@@ -165,11 +168,11 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function offsetSet($index, $value)
     {
-        if (!isset($index)) {
+        if (isset($index)) {
+            $this->nodes[$index] = $value;
+        } else {
             $this->addNode($value);
         }
-
-        $this->nodes[$index] = $value;
     }
 
     /**
