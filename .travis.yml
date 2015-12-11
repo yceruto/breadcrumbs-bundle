@@ -19,7 +19,7 @@ env:
   global:
     - deps="no"
     - SYMFONY_VERSION=""
-    - PHP_CS="no"
+    - PHP_CS="yes"
     - SYMFONY_DEPRECATIONS_HELPER=weak
 
 matrix:

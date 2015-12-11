@@ -15,11 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs;
 use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder;
 
 class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
 {
+    public function testCreate()
+    {
+        $breadcrumbsBuilder = $this->createBreadcrumbsBuilderHelper('/', new RouteCollection());
+        $breadcrumbs = $breadcrumbsBuilder->create();
+        $this->assertInstanceOf('Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs', $breadcrumbs);
+    }
+
     /**
      * @dataProvider getCreateFromRequestData
      */
@@ -32,7 +38,8 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
         $routeCollection->add('_bar_show', new Route('/bar/{id}'));
         $routeCollection->add('_bar_action', new Route('/bar/{id}/{action}'));
 
-        $breadcrumbs = $this->createBreadcrumbsHelper($path, $routeCollection);
+        $breadcrumbsBuilder = $this->createBreadcrumbsBuilderHelper($path, $routeCollection);
+        $breadcrumbs = $breadcrumbsBuilder->createFromRequest();
 
         $this->assertCount(count($result['nodes']), $breadcrumbs->getNodes());
         $nodes = $breadcrumbs->getNodes();
@@ -48,42 +55,47 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'index' => array(
-                '/', array('nodes' => array('/' => 'breadcrumbs._index'))
+                '/',
+                array('nodes' => array('/' => 'breadcrumbs._index')),
             ),
             'foo' => array(
-                '/foo', array(
+                '/foo',
+                array(
                     'nodes' => array(
                         '/' => 'breadcrumbs._index',
                         '/foo' => 'Foo',
-                    )
-                )
+                    ),
+                ),
             ),
             'bar' => array(
-                '/bar/', array(
+                '/bar/',
+                array(
                     'nodes' => array(
                         '/' => 'breadcrumbs._index',
                         '/bar/' => 'bar',
-                    )
-                )
+                    ),
+                ),
             ),
             'bar_show' => array(
-                '/bar/baz', array(
+                '/bar/baz',
+                array(
                     'nodes' => array(
                         '/' => 'breadcrumbs._index',
                         '/bar/' => 'bar',
                         '/bar/baz' => 'baz',
-                    )
-                )
+                    ),
+                ),
             ),
             'bar_action' => array(
-                '/bar/baz/edit', array(
+                '/bar/baz/edit',
+                array(
                     'nodes' => array(
                         '/' => 'breadcrumbs._index',
                         '/bar/' => 'bar',
                         '/bar/baz' => 'baz',
                         '/bar/baz/edit' => 'edit',
-                    )
-                )
+                    ),
+                ),
             ),
         );
     }
@@ -94,9 +106,9 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
      * @param string          $path
      * @param RouteCollection $collection
      *
-     * @return Breadcrumbs
+     * @return BreadcrumbsBuilder
      */
-    private function createBreadcrumbsHelper($path, RouteCollection $collection)
+    private function createBreadcrumbsBuilderHelper($path, RouteCollection $collection)
     {
         $route = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')->disableOriginalConstructor()->getMock();
         $route->method('getRouteCollection')->willReturn($collection);
@@ -118,6 +130,6 @@ class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
             $breadcrumbsBuilder->setRequest($request);
         }
 
-        return $breadcrumbsBuilder->createFromRequest();
+        return $breadcrumbsBuilder;
     }
 }

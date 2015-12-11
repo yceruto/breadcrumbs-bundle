@@ -120,7 +120,7 @@ class BreadcrumbsBuilder
     /**
      * @param string $path
      *
-     * @return boolean|BreadcrumbsNode
+     * @return BreadcrumbsNode|bool
      */
     private function createNode($path)
     {
@@ -145,13 +145,13 @@ class BreadcrumbsBuilder
 
                 if (empty($label)) {
                     // get label through route name
-                    $label = 'breadcrumbs.' . $trace['name'];
+                    $label = 'breadcrumbs.'.$trace['name'];
                 }
 
                 $node = new BreadcrumbsNode();
                 $node->setLabel($label);
                 // use $baseUrl for no prod environments e.g dev 'app_dev.php'
-                $node->setPath($baseUrl . $path);
+                $node->setPath($baseUrl.$path);
 
                 return $node;
             }
