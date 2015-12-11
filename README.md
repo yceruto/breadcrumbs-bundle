@@ -5,6 +5,8 @@ Breadcrumbs
 [![Coverage Status](https://img.shields.io/coveralls/yceruto/breadcrumbs-bundle/master.svg)](https://coveralls.io/github/yceruto/breadcrumbs-bundle?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d/mini.png)](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d)
 <sup><kbd>**SUPPORTS SYMFONY 2.x and 3.x**</kbd></sup>
+[![Packagist Version](https://img.shields.io/packagist/v/yceruto/breadcrumbs-bundle.svg)](https://packagist.org/packages/yceruto/breadcrumbs-bundle)
+[![Github License](https://img.shields.io/github/license/yceruto/breadcrumbs-bundle.svg)](https://github.com/yceruto/breadcrumbs-bundle)
 
 A magic way to create breadcrumbs for symfony applications.
 
