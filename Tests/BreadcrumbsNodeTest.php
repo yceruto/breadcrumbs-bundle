@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
@@ -28,6 +27,6 @@ class BreadcrumbsNodeTest extends TestCase
     public function testToString()
     {
         $node = new BreadcrumbsNode('/', 'index');
-        $this->assertEquals('index', (string)$node);
+        $this->assertEquals('index', (string) $node);
     }
 }

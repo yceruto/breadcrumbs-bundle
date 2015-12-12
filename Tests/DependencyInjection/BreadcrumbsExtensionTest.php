@@ -49,7 +49,7 @@ class BreadcrumbsExtensionTest extends TestCase
 
     public function testLoadOverrideTemplate()
     {
-        $this->container->getParameterBag()->add(array('kernel.root_dir' => __DIR__ . '/Fixtures'));
+        $this->container->getParameterBag()->add(array('kernel.root_dir' => __DIR__.'/Fixtures'));
 
         $this->extension->load(array(), $this->container);
 

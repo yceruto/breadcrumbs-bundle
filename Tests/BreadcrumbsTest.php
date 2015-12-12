@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
