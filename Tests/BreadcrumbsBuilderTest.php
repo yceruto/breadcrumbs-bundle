@@ -102,7 +102,7 @@ class BreadcrumbsBuilderTest extends TestCase
     }
 
     /**
-     * Create Breadcrumbs Helper
+     * Create Breadcrumbs Helper.
      *
      * @param string          $path
      * @param RouteCollection $collection
