@@ -19,7 +19,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     private $nodes = array();
 
     /**
-     * Add a node
+     * Add a node.
      *
      * @param string $path
      * @param string $label
