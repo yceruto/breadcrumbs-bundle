@@ -3,9 +3,10 @@
 
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsNode;
 
-class BreadcrumbsNodeTest extends \PHPUnit_Framework_TestCase
+class BreadcrumbsNodeTest extends TestCase
 {
     public function testCreateAndGetter()
     {

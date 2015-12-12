@@ -3,10 +3,11 @@
 
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs;
 use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsNode;
 
-class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
+class BreadcrumbsTest extends TestCase
 {
     /**
      * @var Breadcrumbs

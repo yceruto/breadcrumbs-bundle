@@ -11,13 +11,14 @@
 
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder;
 
-class BreadcrumbsBuilderTest extends \PHPUnit_Framework_TestCase
+class BreadcrumbsBuilderTest extends TestCase
 {
     public function testCreate()
     {
