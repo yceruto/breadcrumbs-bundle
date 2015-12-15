@@ -57,26 +57,6 @@ Basic Usage
 {{ render_breadcrumbs() }}
 ```
 
-Translate the Breadcrumbs Interface
------------------------------------
-
-The breadcrumbs uses the same language as the underlying Symfony application, which
-is usually configured in the `locale` option of the `app/config/parameters.yml`
-file.
-
-The strings that belong to the breadcrumbs interface are translated using the 
-default `messages` domain.
-
-In addition, make sure that the `translator` service is enabled in the
-application (projects based on the Symfony Standard Edition have it disabled
-by default):
-
-```yaml
-# app/config/config.yml
-framework:
-    translator: { fallbacks: [ "%locale%" ] }
-```
-
 How it work
 -----------
 
@@ -107,7 +87,7 @@ _category_product:
 breadcrumbs._index: Home
 ```
 
-later by request `/store/foo/bar` the `render_breadcrumbs` function returns:
+By request `/store/foo/bar` the `render_breadcrumbs` function returns:
 
 ```html
 <ol class="breadcrumb">
@@ -118,12 +98,32 @@ later by request `/store/foo/bar` the `render_breadcrumbs` function returns:
 </ol>
 ```
 
-If your application does not use translation, you can set the label on the route definition:
+If your application does not use translation, you can set the label in route definition:
 
 ```yaml
 _index:
 	path: /
 	defaults: { _controller: ..., breadcrumbs_label: 'Home' }
+```
+
+Translate the Breadcrumbs Interface
+-----------------------------------
+
+The breadcrumbs uses the same language as the underlying Symfony application, which
+is usually configured in the `locale` option of the `app/config/parameters.yml`
+file.
+
+The strings that belong to the breadcrumbs interface are translated using the 
+default `messages` domain.
+
+In addition, make sure that the `translator` service is enabled in the
+application (projects based on the Symfony Standard Edition have it disabled
+by default):
+
+```yaml
+# app/config/config.yml
+framework:
+    translator: { fallbacks: [ "%locale%" ] }
 ```
 
 Advance Usage
@@ -148,7 +148,7 @@ public function indexAction()
 }
 ```
 
-Then render the custom breadcrumbs here.
+Render the custom breadcrumbs:
 
 ```twig
 {{ render_breadcrumbs(custom_breadcrumbs) }}
@@ -156,7 +156,7 @@ Then render the custom breadcrumbs here.
 
 ### Customize the breadcrumbs template
 
-By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override the default template creating your `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` template in your project structure.
+By default, the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override default template creating your `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` template in your project structure.
 
 ```twig
 {# app/Resources/views/breadcrumbs/breadcrumbs.html.twig #}
@@ -172,7 +172,7 @@ By default the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcr
 </ol>
 ```
 
-Override the default template passing the custom template path directly in the render function.
+Another way of override default template is passing the custom template path directly in render function.
 
 ```twig
 {{ render_breadcrumbs(template='breadcrumbs/custom_breadcrumbs.html.twig')

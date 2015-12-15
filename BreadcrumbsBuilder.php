@@ -54,7 +54,7 @@ class BreadcrumbsBuilder
     }
 
     /**
-     * BC with the 2.3 version.
+     * BC with SF 2.3
      *
      * @param Request|null $request
      */

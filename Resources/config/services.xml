@@ -8,6 +8,7 @@
         <service id="breadcrumbs_builder" class="Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder">
             <argument type="service" id="router"/>
             <argument type="service" id="request_stack" on-invalid="null"/>
+            <!-- BC with SF 2.3 -->
             <call method="setRequest">
                 <argument type="service" id="request" on-invalid="null" strict="false"/>
             </call>
