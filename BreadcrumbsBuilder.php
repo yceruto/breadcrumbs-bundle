@@ -64,7 +64,7 @@ class BreadcrumbsBuilder
     }
 
     /**
-     * Create a Breadcrumb instance
+     * Create a empty breadcrumb
      *
      * @return Breadcrumbs
      */
@@ -74,7 +74,7 @@ class BreadcrumbsBuilder
     }
 
     /**
-     * Create a Breadcrumb from request path
+     * Create a breadcrumb through current request path
      *
      * @return Breadcrumbs
      */
@@ -82,9 +82,9 @@ class BreadcrumbsBuilder
     {
         $breadcrumbs = new Breadcrumbs();
 
-        $paths = $this->getPaths();
+        $paths = $this->getBreadcrumbsPaths();
         foreach ($paths as $path) {
-            if ($node = $this->createNode($path)) {
+            if ($node = $this->createBreadcrumbsNode($path)) {
                 $breadcrumbs->addNode($node);
             }
         }
@@ -93,16 +93,23 @@ class BreadcrumbsBuilder
     }
 
     /**
+     * Get all breadcrumbs paths from current request path
+     *
      * @return array of string
      */
-    private function getPaths()
+    private function getBreadcrumbsPaths()
     {
+        $parts = array();
         $pathInfo = trim($this->getRequest()->getPathInfo(), '/');
-        $parts = $pathInfo ? explode('/', $pathInfo) : array();
+
+        if ($pathInfo) {
+            $parts = explode('/', $pathInfo);
+        }
+
         array_unshift($parts, '/');
+
         $path = '';
         $paths = array();
-
         foreach ($parts as $part) {
             $path .= $part;
             $paths[] = $path;
@@ -117,29 +124,32 @@ class BreadcrumbsBuilder
     }
 
     /**
+     * Create a breadcrumbs node from path
+     *
      * @param string $path
      *
      * @return BreadcrumbsNode|bool
      */
-    private function createNode($path)
+    private function createBreadcrumbsNode($path)
     {
+        // use $baseUrl for no prod environments e.g dev 'app_dev.php'
         $baseUrl = $this->getRequest()->getBaseUrl();
-        $traces = $this->matcher->getTraces($path);
 
+        $traces = $this->matcher->getTraces($path);
         foreach ($traces as $trace) {
             if (TraceableUrlMatcher::ROUTE_MATCHES == $trace['level']) {
-                $route = $this->router->getRouteCollection()
-                    ->get($trace['name']);
+                $route = $this->router->getRouteCollection()->get($trace['name']);
 
                 // get label through settings
                 $label = $route->getDefault('breadcrumbs_label');
 
                 if (empty($label)) {
                     // get label through path
-                    $compiled = $route->compile();
-                    $vars = $compiled->getVariables();
-                    preg_match($compiled->getRegex(), $path, $match);
-                    $label = trim($match[end($vars)], '/');
+                    $compiledRoute = $route->compile();
+                    $vars = $compiledRoute->getVariables();
+                    if (preg_match($compiledRoute->getRegex(), $path, $match)) {
+                        $label = trim($match[end($vars)], '/');
+                    }
                 }
 
                 if (empty($label)) {
@@ -149,7 +159,6 @@ class BreadcrumbsBuilder
 
                 $node = new BreadcrumbsNode();
                 $node->setLabel($label);
-                // use $baseUrl for no prod environments e.g dev 'app_dev.php'
                 $node->setPath($baseUrl.$path);
 
                 return $node;
