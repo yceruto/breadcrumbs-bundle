@@ -22,9 +22,11 @@ class BreadcrumbsBuilderTest extends TestCase
 {
     public function testCreate()
     {
-        $breadcrumbsBuilder = $this->createBreadcrumbsBuilderHelper('/', new RouteCollection());
-        $breadcrumbs = $breadcrumbsBuilder->create();
+        $breadcrumbs = $this->createBreadcrumbsBuilder('/', new RouteCollection())
+            ->create();
+
         $this->assertInstanceOf('Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs', $breadcrumbs);
+        $this->assertEquals(0, $breadcrumbs->count());
     }
 
     /**
@@ -39,8 +41,8 @@ class BreadcrumbsBuilderTest extends TestCase
         $routeCollection->add('_bar_show', new Route('/bar/{id}'));
         $routeCollection->add('_bar_action', new Route('/bar/{id}/{action}'));
 
-        $breadcrumbsBuilder = $this->createBreadcrumbsBuilderHelper($path, $routeCollection);
-        $breadcrumbs = $breadcrumbsBuilder->createFromRequest();
+        $breadcrumbs = $this->createBreadcrumbsBuilder($path, $routeCollection)
+            ->createFromRequest();
 
         $this->assertCount(count($result['nodes']), $breadcrumbs->getNodes());
         $nodes = $breadcrumbs->getNodes();
@@ -102,14 +104,14 @@ class BreadcrumbsBuilderTest extends TestCase
     }
 
     /**
-     * Create Breadcrumbs Helper.
+     * Create a Breadcrumbs Builder.
      *
      * @param string          $path
      * @param RouteCollection $collection
      *
      * @return BreadcrumbsBuilder
      */
-    private function createBreadcrumbsBuilderHelper($path, RouteCollection $collection)
+    private function createBreadcrumbsBuilder($path, RouteCollection $collection)
     {
         $route = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
             ->disableOriginalConstructor()
@@ -130,7 +132,7 @@ class BreadcrumbsBuilderTest extends TestCase
 
         $breadcrumbsBuilder = new BreadcrumbsBuilder($route, $requestStack);
 
-        // BC 2.3
+        // BC with SF 2.3
         if (null === $requestStack) {
             $breadcrumbsBuilder->setRequest($request);
         }
