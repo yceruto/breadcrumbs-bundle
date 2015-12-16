@@ -19,7 +19,37 @@ use Yceruto\Bundle\BreadcrumbsBundle\Twig\BreadcrumbsExtension as TwigBreadcrumb
 
 class BreadcrumbsExtensionTest extends TestCase
 {
-    public function testRenderBreadcrumbs()
+    public function testRenderDefaultBreadcrumbsAndTemplate()
+    {
+        $breadcrumbs = new Breadcrumbs();
+        $breadcrumbs->add('/', 'home');
+
+        $breadcrumbsBuilder = $this->getMockBuilder('Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $breadcrumbsBuilder->method('createFromRequest')
+            ->willReturn($breadcrumbs);
+
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.debug', false);
+        $container->getParameterBag()->add(array('kernel.root_dir' => __DIR__.'/Fixtures'));
+        $container->set('breadcrumbs_builder', $breadcrumbsBuilder);
+
+        $extension = new BreadcrumbsExtension();
+        $extension->load(array(), $container);
+
+        $twigExtension = new TwigBreadcrumbsExtension($container);
+        $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
+        $this->assertInternalType('array', $twigExtension->getFunctions());
+
+        $loader = new \Twig_Loader_Filesystem(array(__DIR__.'/Fixtures/Resources/views/'));
+        $environment = new \Twig_Environment($loader);
+
+        $content = $twigExtension->renderBreadcrumbs($environment);
+        $this->assertContains('<ol class="breadcrumb"><li class="active">Home</li></ol>', $content);
+    }
+
+    public function testRenderCustomBreadcrumbsAndTemplate()
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', false);
