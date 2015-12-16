@@ -84,6 +84,7 @@ _category_product:
 
 ```yaml
 # app/Resources/translations/messages.en.yml
+
 breadcrumbs._index: Home
 ```
 
@@ -126,10 +127,10 @@ framework:
     translator: { fallbacks: [ "%locale%" ] }
 ```
 
-Advance Usage
+Advanced Usage
 -------------
 
-### Create the custom breadcrumbs
+### Create a custom breadcrumbs
 
 ```php
 public function indexAction() 
@@ -156,7 +157,7 @@ Render the custom breadcrumbs:
 
 ### Customize the breadcrumbs template
 
-By default, the breadcrumbs is rendered through `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override default template creating your `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` template in your project structure.
+By default, a breadcrumbs is rendered using the `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override default template creating your own `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` template in your project structure.
 
 ```twig
 {# app/Resources/views/breadcrumbs/breadcrumbs.html.twig #}
