@@ -16,7 +16,6 @@ use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder;
 
 class BreadcrumbsExtension extends \Twig_Extension
 {
-
     /**
      * @var BreadcrumbsBuilder
      */

@@ -39,7 +39,7 @@ class BreadcrumbsExtensionTest extends TestCase
         $extension = new BreadcrumbsExtension();
         $extension->load(array(), $container);
 
-        /** @var BreadcrumbsBuilder $breadcrumbsBuilder */
+        /* @var BreadcrumbsBuilder $breadcrumbsBuilder */
         $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder, $container->getParameter('breadcrumbs_template'));
         $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
         $this->assertInternalType('array', $twigExtension->getFunctions());
@@ -68,7 +68,7 @@ class BreadcrumbsExtensionTest extends TestCase
         $breadcrumbs = new Breadcrumbs();
         $breadcrumbs->add('/', 'home');
 
-        /** @var BreadcrumbsBuilder $breadcrumbsBuilder */
+        /* @var BreadcrumbsBuilder $breadcrumbsBuilder */
         $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder, $container->getParameter('breadcrumbs_template'));
         $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
         $this->assertInternalType('array', $twigExtension->getFunctions());
