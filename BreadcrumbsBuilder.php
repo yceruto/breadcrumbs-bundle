@@ -41,6 +41,11 @@ class BreadcrumbsBuilder
      */
     private $router;
 
+    /**
+     * @var TraceableUrlMatcher
+     */
+    private $matcher;
+
     public function __construct(Router $router, RequestStack $requestStack = null)
     {
         $this->router = $router;
@@ -74,6 +79,10 @@ class BreadcrumbsBuilder
      */
     public function createFromRequest()
     {
+        if (empty($this->matcher)) {
+            $this->matcher = new TraceableUrlMatcher($this->router->getRouteCollection(), $this->router->getContext());
+        }
+
         $breadcrumbs = new Breadcrumbs();
 
         $paths = $this->getBreadcrumbsPaths();
@@ -129,9 +138,7 @@ class BreadcrumbsBuilder
         // use $baseUrl for no prod environments e.g dev 'app_dev.php'
         $baseUrl = $this->getRequest()->getBaseUrl();
 
-        $matcher = new TraceableUrlMatcher($this->router->getRouteCollection(), $this->router->getContext());
-        $traces = $matcher->getTraces($path);
-
+        $traces = $this->matcher->getTraces($path);
         foreach ($traces as $trace) {
             if (TraceableUrlMatcher::ROUTE_MATCHES == $trace['level']) {
                 $route = $this->router->getRouteCollection()->get($trace['name']);
