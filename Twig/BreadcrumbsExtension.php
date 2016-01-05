@@ -11,19 +11,26 @@
 
 namespace Yceruto\Bundle\BreadcrumbsBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs;
+use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder;
 
 class BreadcrumbsExtension extends \Twig_Extension
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * @var BreadcrumbsBuilder
+     */
+    private $breadcrumbsBuilder;
+
+    /**
+     * @var string
+     */
+    private $template;
+
+    public function __construct(BreadcrumbsBuilder $breadcrumbsBuilder, $template)
     {
-        $this->container = $container;
+        $this->breadcrumbsBuilder = $breadcrumbsBuilder;
+        $this->template = $template;
     }
 
     /**
@@ -39,11 +46,11 @@ class BreadcrumbsExtension extends \Twig_Extension
     public function renderBreadcrumbs(\Twig_Environment $twig, Breadcrumbs $breadcrumbs = null, $template = null)
     {
         if (null === $breadcrumbs) {
-            $breadcrumbs = $this->container->get('breadcrumbs_builder')->createFromRequest();
+            $breadcrumbs = $this->breadcrumbsBuilder->createFromRequest();
         }
-        
+
         if (null === $template) {
-            $template = $this->container->getParameter('breadcrumbs_template');
+            $template = $this->template;
         }
 
         return $twig->render($template, array('breadcrumbs' => $breadcrumbs));

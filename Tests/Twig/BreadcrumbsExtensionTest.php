@@ -14,6 +14,7 @@ namespace Tests\Twig;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Yceruto\Bundle\BreadcrumbsBundle\Breadcrumbs;
+use Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder;
 use Yceruto\Bundle\BreadcrumbsBundle\DependencyInjection\BreadcrumbsExtension;
 use Yceruto\Bundle\BreadcrumbsBundle\Twig\BreadcrumbsExtension as TwigBreadcrumbsExtension;
 
@@ -38,7 +39,8 @@ class BreadcrumbsExtensionTest extends TestCase
         $extension = new BreadcrumbsExtension();
         $extension->load(array(), $container);
 
-        $twigExtension = new TwigBreadcrumbsExtension($container);
+        /** @var BreadcrumbsBuilder $breadcrumbsBuilder */
+        $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder, $container->getParameter('breadcrumbs_template'));
         $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
         $this->assertInternalType('array', $twigExtension->getFunctions());
 
@@ -51,9 +53,14 @@ class BreadcrumbsExtensionTest extends TestCase
 
     public function testRenderCustomBreadcrumbsAndTemplate()
     {
+        $breadcrumbsBuilder = $this->getMockBuilder('Yceruto\Bundle\BreadcrumbsBundle\BreadcrumbsBuilder')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', false);
         $container->getParameterBag()->add(array('kernel.root_dir' => __DIR__.'/Fixtures'));
+        $container->set('breadcrumbs_builder', $breadcrumbsBuilder);
 
         $extension = new BreadcrumbsExtension();
         $extension->load(array(), $container);
@@ -61,7 +68,8 @@ class BreadcrumbsExtensionTest extends TestCase
         $breadcrumbs = new Breadcrumbs();
         $breadcrumbs->add('/', 'home');
 
-        $twigExtension = new TwigBreadcrumbsExtension($container);
+        /** @var BreadcrumbsBuilder $breadcrumbsBuilder */
+        $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder, $container->getParameter('breadcrumbs_template'));
         $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
         $this->assertInternalType('array', $twigExtension->getFunctions());
 

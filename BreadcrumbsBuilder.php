@@ -27,11 +27,6 @@ use Symfony\Component\Routing\Matcher\TraceableUrlMatcher;
 class BreadcrumbsBuilder
 {
     /**
-     * @var TraceableUrlMatcher
-     */
-    private $matcher;
-
-    /**
      * @var RequestStack
      */
     private $requestStack;
@@ -49,7 +44,6 @@ class BreadcrumbsBuilder
     public function __construct(Router $router, RequestStack $requestStack = null)
     {
         $this->router = $router;
-        $this->matcher = new TraceableUrlMatcher($router->getRouteCollection(), $router->getContext());
         $this->requestStack = $requestStack;
     }
 
@@ -135,7 +129,9 @@ class BreadcrumbsBuilder
         // use $baseUrl for no prod environments e.g dev 'app_dev.php'
         $baseUrl = $this->getRequest()->getBaseUrl();
 
-        $traces = $this->matcher->getTraces($path);
+        $matcher = new TraceableUrlMatcher($this->router->getRouteCollection(), $this->router->getContext());
+        $traces = $matcher->getTraces($path);
+
         foreach ($traces as $trace) {
             if (TraceableUrlMatcher::ROUTE_MATCHES == $trace['level']) {
                 $route = $this->router->getRouteCollection()->get($trace['name']);
