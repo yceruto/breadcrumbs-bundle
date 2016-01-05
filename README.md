@@ -1,4 +1,4 @@
-Breadcrumbs > Bundle > Symfony
+Symfony > Bundle > Breadcrumbs
 ==============================
 
 [![Build Status](https://travis-ci.org/yceruto/breadcrumbs-bundle.svg?branch=master)](https://travis-ci.org/yceruto/breadcrumbs-bundle)
