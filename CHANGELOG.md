@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+1.0.3
+-----
+
+ * fixed circular reference issue
+
+1.0.2
+-----
+
+ * fixed symfony 3 installation
+
 1.0.1
 -----
 
