@@ -2,6 +2,7 @@ Symfony > Bundle > Breadcrumbs
 ==============================
 
 [![Build Status](https://travis-ci.org/yceruto/breadcrumbs-bundle.svg?branch=master)](https://travis-ci.org/yceruto/breadcrumbs-bundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yceruto/breadcrumbs-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yceruto/breadcrumbs-bundle/?branch=master)
 [![Coverage Status](https://img.shields.io/coveralls/yceruto/breadcrumbs-bundle/master.svg)](https://coveralls.io/github/yceruto/breadcrumbs-bundle?branch=master)
 [![Packagist Version](https://img.shields.io/packagist/v/yceruto/breadcrumbs-bundle.svg)](https://packagist.org/packages/yceruto/breadcrumbs-bundle)
 [![Packagist Download](https://img.shields.io/packagist/dt/yceruto/breadcrumbs-bundle.svg)](https://packagist.org/packages/yceruto/breadcrumbs-bundle)
