@@ -108,7 +108,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * @return BreadcrumbsNode|boolean
+     * @return BreadcrumbsNode|bool
      */
     public function first()
     {
@@ -116,7 +116,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * @return BreadcrumbsNode|boolean
+     * @return BreadcrumbsNode|bool
      */
     public function last()
     {
@@ -124,7 +124,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * @return BreadcrumbsNode|boolean
+     * @return BreadcrumbsNode|bool
      */
     public function current()
     {
@@ -132,7 +132,7 @@ class Breadcrumbs implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * @return BreadcrumbsNode|boolean
+     * @return BreadcrumbsNode|bool
      */
     public function next()
     {
