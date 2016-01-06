@@ -34,29 +34,27 @@ class BreadcrumbsExtensionTest extends TestCase
         $this->extension = new BreadcrumbsExtension();
     }
 
-    public function testLoadDefault()
+    /**
+     * @dataProvider getData
+     */
+    public function testLoadTemplate($rootDir, $templatePath)
     {
-        $this->container->getParameterBag()->add(array('kernel.root_dir' => __DIR__));
-
+        $this->container->getParameterBag()->add(array('kernel.root_dir' => $rootDir));
         $this->extension->load(array(), $this->container);
-
         $this->assertTrue($this->container->has('breadcrumbs_builder'));
-        $this->assertEquals(
-            '@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig',
-            $this->container->getParameter('breadcrumbs_template')
-        );
+        $this->assertEquals($templatePath, $this->container->getParameter('breadcrumbs_template'));
     }
 
-    public function testLoadOverrideTemplate()
+    /**
+     * Get data provider
+     *
+     * @return array
+     */
+    public function getData()
     {
-        $this->container->getParameterBag()->add(array('kernel.root_dir' => __DIR__.'/Fixtures'));
-
-        $this->extension->load(array(), $this->container);
-
-        $this->assertTrue($this->container->has('breadcrumbs_builder'));
-        $this->assertEquals(
-            'breadcrumbs/breadcrumbs.html.twig',
-            $this->container->getParameter('breadcrumbs_template')
+        return array(
+            array(__DIR__, '@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig'),
+            array(__DIR__.'/Fixtures', 'breadcrumbs/breadcrumbs.html.twig'),
         );
     }
 }
