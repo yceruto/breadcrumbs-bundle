@@ -152,6 +152,7 @@ class BreadcrumbsBuilder
                     $vars = $compiledRoute->getVariables();
                     if (preg_match($compiledRoute->getRegex(), $path, $match)) {
                         $label = trim($match[end($vars)], '/');
+                        $label = str_replace('/', ' ', $label);
                     }
                 }
 
