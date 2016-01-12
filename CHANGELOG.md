@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.5
+-----
+
+ * fixed humanize the label text
+
 1.0.4
 -----
 
