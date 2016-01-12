@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.4
+-----
+
+ * fixed label title
+
 1.0.3
 -----
 
