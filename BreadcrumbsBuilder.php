@@ -85,10 +85,12 @@ class BreadcrumbsBuilder
 
         $breadcrumbs = new Breadcrumbs();
 
+        $parent = null;
         $paths = $this->getBreadcrumbsPaths();
         foreach ($paths as $path) {
-            if ($node = $this->createBreadcrumbsNode($path)) {
+            if ($node = $this->createBreadcrumbsNode($path, $parent)) {
                 $breadcrumbs->addNode($node);
+                $parent = $path;
             }
         }
 
@@ -130,10 +132,11 @@ class BreadcrumbsBuilder
      * Create a breadcrumbs node from path
      *
      * @param string $path
+     * @param string $parent
      *
      * @return BreadcrumbsNode|bool
      */
-    private function createBreadcrumbsNode($path)
+    private function createBreadcrumbsNode($path, $parent)
     {
         // use $baseUrl for no prod environments e.g dev 'app_dev.php'
         $baseUrl = $this->getRequest()->getBaseUrl();
@@ -150,10 +153,13 @@ class BreadcrumbsBuilder
                     // get label through path
                     $compiledRoute = $route->compile();
                     $vars = $compiledRoute->getVariables();
-                    if (preg_match($compiledRoute->getRegex(), $path, $match)) {
-                        $label = trim($match[end($vars)], '/');
-                        $label = preg_replace('[\W|_]', ' ', $label);
+
+                    if (empty($vars)) {
+                        $label = substr($path, strlen($parent));
+                    } elseif (preg_match($compiledRoute->getRegex(), $path, $match)) {
+                        $label = $match[end($vars)];
                     }
+                    $label = trim(preg_replace('[\W|_]', ' ', $label));
                 }
 
                 if (empty($label)) {

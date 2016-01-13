@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.6
+-----
+
+ * fixed parse label
+
 1.0.5
 -----
 

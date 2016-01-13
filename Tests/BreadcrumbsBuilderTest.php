@@ -37,6 +37,7 @@ class BreadcrumbsBuilderTest extends TestCase
         $routeCollection = new RouteCollection();
         $routeCollection->add('_index', new Route('/'));
         $routeCollection->add('_foo', new Route('/foo', array('breadcrumbs_label' => 'Foo')));
+        $routeCollection->add('_foo_bar', new Route('/foo/bar'));
         $routeCollection->add('_bar', new Route('/bar/'));
         $routeCollection->add('_bar_show', new Route('/bar/{id}'));
         $routeCollection->add('_bar_action', new Route('/bar/{id}/{action}'));
@@ -67,6 +68,16 @@ class BreadcrumbsBuilderTest extends TestCase
                     'nodes' => array(
                         '/' => 'breadcrumbs._index',
                         '/foo' => 'Foo',
+                    ),
+                ),
+            ),
+            'foo_bar' => array(
+                '/foo/bar',
+                array(
+                    'nodes' => array(
+                        '/' => 'breadcrumbs._index',
+                        '/foo' => 'Foo',
+                        '/foo/bar' => 'bar',
                     ),
                 ),
             ),
