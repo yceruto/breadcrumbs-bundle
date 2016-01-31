@@ -1,9 +1,0 @@
-<ol class="custom-breadcrumb">
-    {% for node in breadcrumbs %}
-        {% if not loop.last %}
-            <li><a href="{{ node.path }}">{{ node.label|trans|capitalize }}</a></li>
-        {% else %}
-            <li class="active">{{ node.label|trans|capitalize }}</li>
-        {% endif %}
-    {% endfor %}
-</ol>

@@ -17,44 +17,12 @@ use Yceruto\Bundle\BreadcrumbsBundle\DependencyInjection\BreadcrumbsExtension;
 
 class BreadcrumbsExtensionTest extends TestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
-
-    /**
-     * @var BreadcrumbsExtension
-     */
-    private $extension;
-
-    public function setUp()
+    public function testLoadService()
     {
-        $this->container = new ContainerBuilder();
-        $this->container->setParameter('kernel.debug', false);
-        $this->extension = new BreadcrumbsExtension();
-    }
-
-    /**
-     * @dataProvider getData
-     */
-    public function testLoadTemplate($rootDir, $templatePath)
-    {
-        $this->container->getParameterBag()->add(array('kernel.root_dir' => $rootDir));
-        $this->extension->load(array(), $this->container);
-        $this->assertTrue($this->container->has('breadcrumbs_builder'));
-        $this->assertEquals($templatePath, $this->container->getParameter('breadcrumbs_template'));
-    }
-
-    /**
-     * Get data provider
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        return array(
-            array(__DIR__, '@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig'),
-            array(__DIR__.'/Fixtures', 'breadcrumbs/breadcrumbs.html.twig'),
-        );
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.debug', false);
+        $extension = new BreadcrumbsExtension();
+        $extension->load(array(), $container);
+        $this->assertTrue($container->has('breadcrumbs_builder'));
     }
 }

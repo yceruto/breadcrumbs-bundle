@@ -21,15 +21,9 @@ class BreadcrumbsExtension extends \Twig_Extension
      */
     private $breadcrumbsBuilder;
 
-    /**
-     * @var string
-     */
-    private $template;
-
-    public function __construct(BreadcrumbsBuilder $breadcrumbsBuilder, $template)
+    public function __construct(BreadcrumbsBuilder $breadcrumbsBuilder)
     {
         $this->breadcrumbsBuilder = $breadcrumbsBuilder;
-        $this->template = $template;
     }
 
     /**
@@ -42,14 +36,10 @@ class BreadcrumbsExtension extends \Twig_Extension
         );
     }
 
-    public function renderBreadcrumbs(\Twig_Environment $twig, Breadcrumbs $breadcrumbs = null, $template = null)
+    public function renderBreadcrumbs(\Twig_Environment $twig, Breadcrumbs $breadcrumbs = null, $template = '@Breadcrumbs/breadcrumbs.html.twig')
     {
         if (null === $breadcrumbs) {
             $breadcrumbs = $this->breadcrumbsBuilder->createFromRequest();
-        }
-
-        if (null === $template) {
-            $template = $this->template;
         }
 
         return $twig->render($template, array('breadcrumbs' => $breadcrumbs));

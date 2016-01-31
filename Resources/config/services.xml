@@ -17,7 +17,6 @@
         <service id="breadcrumbs.twig_extension" class="Yceruto\Bundle\BreadcrumbsBundle\Twig\BreadcrumbsExtension" public="false">
             <!-- Must be injected the service container to avoid circular references related with breadcrumbs_builder service -->
             <argument type="service" id="breadcrumbs_builder"/>
-            <argument>%breadcrumbs_template%</argument>
             <tag name="twig.extension"/>
         </service>
     </services>

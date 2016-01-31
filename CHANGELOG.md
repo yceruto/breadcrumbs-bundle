@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.7
+-----
+
+ * use symfony ability to overwrite templates from thirty bundle
+
 1.0.6
 -----
 

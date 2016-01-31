@@ -23,14 +23,6 @@ class BreadcrumbsExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $templatesDir = $container->getParameter('kernel.root_dir').'/Resources/views';
-        if (file_exists($templatesDir.'/breadcrumbs/breadcrumbs.html.twig')) {
-            $template = 'breadcrumbs/breadcrumbs.html.twig';
-        } else {
-            $template = '@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig';
-        }
-        $container->setParameter('breadcrumbs_template', $template);
-
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }

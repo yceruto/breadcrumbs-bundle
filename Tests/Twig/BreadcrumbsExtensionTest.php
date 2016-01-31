@@ -33,18 +33,18 @@ class BreadcrumbsExtensionTest extends TestCase
 
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', false);
-        $container->getParameterBag()->add(array('kernel.root_dir' => __DIR__.'/Fixtures'));
         $container->set('breadcrumbs_builder', $breadcrumbsBuilder);
 
         $extension = new BreadcrumbsExtension();
         $extension->load(array(), $container);
 
         /* @var BreadcrumbsBuilder $breadcrumbsBuilder */
-        $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder, $container->getParameter('breadcrumbs_template'));
+        $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder);
         $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
         $this->assertInternalType('array', $twigExtension->getFunctions());
 
-        $loader = new \Twig_Loader_Filesystem(array(__DIR__.'/Fixtures/Resources/views/'));
+        $loader = new \Twig_Loader_Filesystem();
+        $loader->addPath(__DIR__.'/Fixtures/Resources/views', 'Breadcrumbs');
         $environment = new \Twig_Environment($loader);
 
         $content = $twigExtension->renderBreadcrumbs($environment);
@@ -59,7 +59,6 @@ class BreadcrumbsExtensionTest extends TestCase
 
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', false);
-        $container->getParameterBag()->add(array('kernel.root_dir' => __DIR__.'/Fixtures'));
         $container->set('breadcrumbs_builder', $breadcrumbsBuilder);
 
         $extension = new BreadcrumbsExtension();
@@ -69,18 +68,13 @@ class BreadcrumbsExtensionTest extends TestCase
         $breadcrumbs->add('/', 'home');
 
         /* @var BreadcrumbsBuilder $breadcrumbsBuilder */
-        $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder, $container->getParameter('breadcrumbs_template'));
-        $this->assertEquals('breadcrumbs_extension', $twigExtension->getName());
-        $this->assertInternalType('array', $twigExtension->getFunctions());
+        $twigExtension = new TwigBreadcrumbsExtension($breadcrumbsBuilder);
 
-        $loader = new \Twig_Loader_Filesystem(array(__DIR__.'/Fixtures/Resources/views/'));
+        $loader = new \Twig_Loader_Filesystem();
+        $loader->addPath(__DIR__.'/Fixtures/Resources/BreadcrumbsBundle/views', 'Breadcrumbs');
         $environment = new \Twig_Environment($loader);
 
         $content = $twigExtension->renderBreadcrumbs($environment, $breadcrumbs);
-        $this->assertContains('<ol class="breadcrumb"><li class="active">Home</li></ol>', $content);
-
-        $customTemplate = 'breadcrumbs/custom_breadcrumbs.html.twig';
-        $content = $twigExtension->renderBreadcrumbs($environment, $breadcrumbs, $customTemplate);
         $this->assertContains('<ol class="custom-breadcrumb"><li class="active">HOME</li></ol>', $content);
     }
 }
