@@ -144,28 +144,7 @@ class BreadcrumbsBuilder
         $traces = $this->matcher->getTraces($path);
         foreach ($traces as $trace) {
             if (TraceableUrlMatcher::ROUTE_MATCHES == $trace['level']) {
-                $route = $this->router->getRouteCollection()->get($trace['name']);
-
-                // get label through settings
-                $label = $route->getDefault('breadcrumbs_label');
-
-                if (empty($label)) {
-                    // get label through path
-                    $compiledRoute = $route->compile();
-                    $vars = $compiledRoute->getVariables();
-
-                    if (empty($vars)) {
-                        $label = substr($path, strlen($parent));
-                    } elseif (preg_match($compiledRoute->getRegex(), $path, $match)) {
-                        $label = $match[end($vars)];
-                    }
-                    $label = trim(preg_replace('[\W|_]', ' ', $label));
-                }
-
-                if (empty($label)) {
-                    // get label through route name
-                    $label = 'breadcrumbs.'.$trace['name'];
-                }
+                $label = $this->getLabel($path, $parent, $trace['name']);
 
                 $node = new BreadcrumbsNode();
                 $node->setLabel($label);
@@ -181,5 +160,44 @@ class BreadcrumbsBuilder
     private function getRequest()
     {
         return $this->requestStack ? $this->requestStack->getCurrentRequest() : $this->request;
+    }
+
+    /**
+     * Get label
+     *
+     * @param $path
+     * @param $parent
+     * @param $name
+     *
+     * @return string
+     */
+    private function getLabel($path, $parent, $name)
+    {
+        $route = $this->router->getRouteCollection()->get($name);
+
+        // get label through settings
+        $label = $route->getDefault('breadcrumbs_label');
+
+        if (empty($label)) {
+            // get label through path
+            $compiledRoute = $route->compile();
+            $vars = $compiledRoute->getVariables();
+
+            if (empty($vars)) {
+                $label = substr($path, strlen($parent));
+            } elseif (preg_match($compiledRoute->getRegex(), $path, $match)) {
+                $label = $match[end($vars)];
+            }
+            $label = trim(preg_replace('[\W|_]', ' ', $label));
+        }
+
+        if (empty($label)) {
+            // get label through route name
+            $label = 'breadcrumbs.'.$name;
+
+            return $label;
+        }
+
+        return $label;
     }
 }
