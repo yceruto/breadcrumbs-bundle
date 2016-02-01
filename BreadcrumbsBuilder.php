@@ -119,7 +119,7 @@ class BreadcrumbsBuilder
             $path .= $part;
             $paths[] = $path;
 
-            if (strlen($part) > 1) {
+            if ('/' !== $part) {
                 $path .= '/';
                 $paths[] = $path;
             }
@@ -189,6 +189,10 @@ class BreadcrumbsBuilder
                 $label = $match[end($vars)];
             }
             $label = trim(preg_replace('[\W|_]', ' ', $label));
+
+            if (is_numeric($label)) {
+                $label = null;
+            }
         }
 
         if (empty($label)) {

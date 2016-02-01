@@ -11,6 +11,7 @@
 
 namespace Yceruto\Bundle\BreadcrumbsBundle\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
@@ -100,6 +101,16 @@ class BreadcrumbsBuilderTest extends TestCase
                     ),
                 ),
             ),
+            'bar_int_show' => array(
+                '/bar/1',
+                array(
+                    'nodes' => array(
+                        '/' => 'breadcrumbs._index',
+                        '/bar/' => 'bar',
+                        '/bar/1' => 'breadcrumbs._bar_show',
+                    ),
+                ),
+            ),
             'bar_action' => array(
                 '/bar/baz/edit',
                 array(
@@ -108,6 +119,28 @@ class BreadcrumbsBuilderTest extends TestCase
                         '/bar/' => 'bar',
                         '/bar/baz' => 'baz',
                         '/bar/baz/edit' => 'edit',
+                    ),
+                ),
+            ),
+            'bar_int_action' => array(
+                '/bar/1/edit',
+                array(
+                    'nodes' => array(
+                        '/' => 'breadcrumbs._index',
+                        '/bar/' => 'bar',
+                        '/bar/1' => 'breadcrumbs._bar_show',
+                        '/bar/1/edit' => 'edit',
+                    ),
+                ),
+            ),
+            'bar_int2_action' => array(
+                '/bar/1/2',
+                array(
+                    'nodes' => array(
+                        '/' => 'breadcrumbs._index',
+                        '/bar/' => 'bar',
+                        '/bar/1' => 'breadcrumbs._bar_show',
+                        '/bar/1/2' => 'breadcrumbs._bar_action',
                     ),
                 ),
             ),
@@ -124,6 +157,7 @@ class BreadcrumbsBuilderTest extends TestCase
      */
     private function createBreadcrumbsBuilder($path, RouteCollection $collection)
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Router $route */
         $route = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
             ->disableOriginalConstructor()
             ->getMock();

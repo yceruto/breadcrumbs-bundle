@@ -4,6 +4,7 @@ CHANGELOG
 1.0.7
 -----
 
+ * avoid numeric labels
  * use symfony ability to overwrite templates from thirty bundle
 
 1.0.6
