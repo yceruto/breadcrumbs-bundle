@@ -6,16 +6,15 @@ Symfony > Bundle > Breadcrumbs
 [![Coverage Status](https://img.shields.io/coveralls/yceruto/breadcrumbs-bundle/master.svg)](https://coveralls.io/github/yceruto/breadcrumbs-bundle?branch=master)
 [![Packagist Version](https://img.shields.io/packagist/v/yceruto/breadcrumbs-bundle.svg)](https://packagist.org/packages/yceruto/breadcrumbs-bundle)
 [![Packagist Download](https://img.shields.io/packagist/dt/yceruto/breadcrumbs-bundle.svg)](https://packagist.org/packages/yceruto/breadcrumbs-bundle)
-[![Github License](https://img.shields.io/github/license/yceruto/breadcrumbs-bundle.svg)](https://github.com/yceruto/breadcrumbs-bundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d/mini.png)](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d)
 <sup><kbd>**SUPPORTS SYMFONY 2.x and 3.x**</kbd></sup>
 
 A magic way to create breadcrumbs for symfony applications.
 
 **Features**
-* build the breadcrumbs through current request uri (Magic).
-* build the custom breadcrumbs.
-* render the custom breadcrumbs template.
+* build breadcrumbs through current request uri (Magic).
+* build custom breadcrumbs.
+* render custom breadcrumbs template.
 
 Installation
 ------------
@@ -164,8 +163,8 @@ find that you need to override the default template that is provided by
 the bundle. Although the template name is not configurable, the Symfony
 framework provides two ways to override the templates of a bundle.
 
-1) Define a new template of the same name in the `app/Resources` directory
-2) Create a new bundle that is defined as a child of `BreadcrumbsBundle`
+ 1. Define a new template of the same name in the `app/Resources` directory
+ 2. Create a new bundle that is defined as a child of `BreadcrumbsBundle`
 
 #### Example: Overriding The Default breadcrumbs.html.twig
 
