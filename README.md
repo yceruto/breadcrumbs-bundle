@@ -130,7 +130,7 @@ framework:
 ```
 
 Advanced Usage
--------------
+--------------
 
 ### Create a custom breadcrumbs
 
@@ -157,29 +157,63 @@ Render the custom breadcrumbs:
 {{ render_breadcrumbs(custom_breadcrumbs) }}
 ```
 
-### Customize the breadcrumbs template
+### Overriding Default BreadcrumbsBundle Template
 
-By default, a breadcrumbs is rendered using the `@Breadcrumbs/breadcrumbs/breadcrumbs.html.twig` template. You can override default template creating your own `app/Resources/views/breadcrumbs/breadcrumbs.html.twig` template in your project structure.
+As you start to incorporate BreadcrumbsBundle into your application, you will probably
+find that you need to override the default template that is provided by
+the bundle. Although the template name is not configurable, the Symfony
+framework provides two ways to override the templates of a bundle.
+
+1) Define a new template of the same name in the `app/Resources` directory
+2) Create a new bundle that is defined as a child of `BreadcrumbsBundle`
+
+#### Example: Overriding The Default breadcrumbs.html.twig
+
+An example of overriding this breadcrumbs template is demonstrated below using first of the 
+overriding options listed above.
+
+Here is the default `breadcrumbs.html.twig` provided by the `BreadcrumbsBundle`:
 
 ```twig
-{# app/Resources/views/breadcrumbs/breadcrumbs.html.twig #}
-
 <ol class="breadcrumb">
     {% for node in breadcrumbs %}
         {% if not loop.last %}
-            <li><a href="{{ node.path }}">{% if loop.first %}<i class="fa fa-home"></i>{% endif %} {{ node.label|trans }}</a></li>
+            <li><a href="{{ node.path }}">{{ node.label|trans|title }}</a></li>
         {% else %}
-            <li class="active">{% if loop.first %}<i class="fa fa-home"></i>{% endif %} {{ node.label|trans }}</li>
+            <li class="active">{{ node.label|trans|title }}</li>
         {% endif %}
     {% endfor %}
 </ol>
 ```
 
-Another way of override default template is passing the custom template path directly in render function.
+The following Twig template file is an example of a breadcrumbs file that might be used
+to override the provided by the bundle.
 
 ```twig
-{{ render_breadcrumbs(template='breadcrumbs/custom_breadcrumbs.html.twig')
+<ol class="breadcrumb">
+    {% for node in breadcrumbs %}
+        {% set icon = loop.first ? '<i class="fa fa-home"></i>' %}
+        
+        {% if not loop.last %}
+            <li><a href="{{ node.path }}">{{ icon|raw }} {{ node.label|trans|title }}</a></li>
+        {% else %}
+            <li class="active">{{ icon|raw }} {{ node.label|trans|title }}</li>
+        {% endif %}
+    {% endfor %}
+</ol>
 ```
+
+**1) Define New Template In app/Resources**
+
+The easiest way to override a bundle's template is to simply place a new one in
+your `app/Resources` folder. To override the breadcrumbs template located at
+`Resources/views/breadcrumbs.html.twig` in the `BreadcrumbsBundle` directory, you would place
+your new breadcrumbs template at `app/Resources/BreadcrumbsBundle/views/breadcrumbs.html.twig`.
+
+As you can see the pattern for overriding templates in this way is to
+create a folder with the name of the bundle class in the `app/Resources` directory.
+Then add your new template to this folder, preserving the directory structure from the
+original bundle.
 
 Resources
 ---------
