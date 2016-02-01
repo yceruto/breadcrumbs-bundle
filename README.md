@@ -195,9 +195,9 @@ to override the provided by the bundle.
         {% set icon = loop.first ? '<i class="fa fa-home"></i>' %}
         
         {% if not loop.last %}
-            <li><a href="{{ node.path }}">{{ icon|raw }} {{ node.label|trans|title }}</a></li>
+            <li><a href="{{ node.path }}">{{ icon|raw }}{{ node.label|trans|title }}</a></li>
         {% else %}
-            <li class="active">{{ icon|raw }} {{ node.label|trans|title }}</li>
+            <li class="active">{{ icon|raw }}{{ node.label|trans|title }}</li>
         {% endif %}
     {% endfor %}
 </ol>
