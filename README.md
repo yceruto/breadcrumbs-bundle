@@ -9,10 +9,10 @@ Symfony > Bundle > Breadcrumbs
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d/mini.png)](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d)
 <sup><kbd>**SUPPORTS SYMFONY 2.x and 3.x**</kbd></sup>
 
-A magic way to create breadcrumbs for symfony applications.
+A friendly way to create breadcrumbs for symfony applications.
 
 **Features**
-* build breadcrumbs through current request uri (Magic).
+* build breadcrumbs through current request uri.
 * build custom breadcrumbs.
 * render custom breadcrumbs template.
 
@@ -54,9 +54,13 @@ Basic Usage
 
 ### Render the breadcrumbs in your template
 
+By default, the breadcrumb is builded through request path info.
+
 ```twig
 {{ render_breadcrumbs() }}
 ```
+
+**That's it!**
 
 How it work
 -----------
