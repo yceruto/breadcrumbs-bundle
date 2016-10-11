@@ -12,9 +12,9 @@ Symfony > Bundle > Breadcrumbs
 A friendly way to create breadcrumbs for symfony applications.
 
 **Features**
-* build breadcrumbs through current request uri.
-* build custom breadcrumbs.
-* render custom breadcrumbs template.
+* Build breadcrumbs through current request uri (default).
+* Customize breadcrumbs nodes.
+* Customize breadcrumbs template.
 
 Installation
 ------------
@@ -57,6 +57,8 @@ Basic Usage
 By default, the breadcrumb is builded through request path info.
 
 ```twig
+{# app/Resources/views/base.html.twig #}
+
 {{ render_breadcrumbs() }}
 ```
 
