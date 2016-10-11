@@ -9,12 +9,12 @@ Symfony > Bundle > Breadcrumbs
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d/mini.png)](https://insight.sensiolabs.com/projects/d5df66f3-377d-4f39-9875-bbda6e3d235d)
 <sup><kbd>**SUPPORTS SYMFONY 2.x and 3.x**</kbd></sup>
 
-A magic way to create breadcrumbs for symfony applications.
+A friendly way to create breadcrumbs for symfony applications.
 
 **Features**
-* build breadcrumbs through current request uri (Magic).
-* build custom breadcrumbs.
-* render custom breadcrumbs template.
+* Build breadcrumbs through current request uri (default).
+* Customize breadcrumbs nodes.
+* Customize breadcrumbs template.
 
 Installation
 ------------
@@ -54,14 +54,20 @@ Basic Usage
 
 ### Render the breadcrumbs in your template
 
+Render the breadcrumb through current request path info.
+
 ```twig
+{# app/Resources/views/base.html.twig #}
+
 {{ render_breadcrumbs() }}
 ```
+
+**That's it!**
 
 How it work
 -----------
 
-Suppose I have the follows routes and translation:
+Suppose you the follows routes and translation:
 
 ```yaml
 # app/config/routing.yml
@@ -89,7 +95,7 @@ _category_product:
 breadcrumbs._index: Home
 ```
 
-By request `/store/foo/bar` the `render_breadcrumbs` function returns:
+For this request path `/store/foo/bar` the `render_breadcrumbs()` function returns:
 
 ```html
 <ol class="breadcrumb">
@@ -100,7 +106,7 @@ By request `/store/foo/bar` the `render_breadcrumbs` function returns:
 </ol>
 ```
 
-If your application does not use translation, you can set the label in route definition:
+If your application does not use translation feature, you can set the label text in route definition:
 
 ```yaml
 _index:
@@ -131,7 +137,7 @@ framework:
 Advanced Usage
 --------------
 
-### Create a custom breadcrumbs
+### Customize the breadcrumb nodes
 
 ```php
 public function indexAction() 
@@ -150,7 +156,7 @@ public function indexAction()
 }
 ```
 
-Render the custom breadcrumbs:
+Render customized breadcrumbs:
 
 ```twig
 {{ render_breadcrumbs(custom_breadcrumbs) }}
