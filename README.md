@@ -54,7 +54,7 @@ Basic Usage
 
 ### Render the breadcrumbs in your template
 
-By default, the breadcrumb is builded through request path info.
+Render the breadcrumb through current request path info.
 
 ```twig
 {# app/Resources/views/base.html.twig #}
@@ -67,7 +67,7 @@ By default, the breadcrumb is builded through request path info.
 How it work
 -----------
 
-Suppose I have the follows routes and translation:
+Suppose you the follows routes and translation:
 
 ```yaml
 # app/config/routing.yml
@@ -95,7 +95,7 @@ _category_product:
 breadcrumbs._index: Home
 ```
 
-By request `/store/foo/bar` the `render_breadcrumbs` function returns:
+For this request path `/store/foo/bar` the `render_breadcrumbs()` function returns:
 
 ```html
 <ol class="breadcrumb">
@@ -106,7 +106,7 @@ By request `/store/foo/bar` the `render_breadcrumbs` function returns:
 </ol>
 ```
 
-If your application does not use translation, you can set the label in route definition:
+If your application does not use translation feature, you can set the label text in route definition:
 
 ```yaml
 _index:
@@ -137,7 +137,7 @@ framework:
 Advanced Usage
 --------------
 
-### Create a custom breadcrumbs
+### Customize the breadcrumb nodes
 
 ```php
 public function indexAction() 
@@ -156,7 +156,7 @@ public function indexAction()
 }
 ```
 
-Render the custom breadcrumbs:
+Render customized breadcrumbs:
 
 ```twig
 {{ render_breadcrumbs(custom_breadcrumbs) }}
